@@ -13,7 +13,7 @@ graph TD
         DB[(Database: MySQL)]
     end
 
-    User -->|1. Request [www.foobar.com](https://www.foobar.com)| DNS
+    User -->|1. Request www.foobar.com| DNS
     DNS -->|2. Resolves IP: 8.8.8.8| User
     User -->|3. HTTP Request| Nginx
     Nginx -->|4. Forward Dynamic Requests| AppServer
