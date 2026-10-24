@@ -22,6 +22,7 @@ graph TD
     DB -->|7. Return Data| AppServer
     AppServer -->|8. Response| Nginx
     Nginx -->|9. HTTP Response| User
+```
 
 ## Overview
 When a user wants to access `www.foobar.com`, the browser sends a DNS request to resolve the domain name to the server's IP address (`8.8.8.8`). The browser then sends an HTTP request to the server, where Nginx handles the incoming traffic.
