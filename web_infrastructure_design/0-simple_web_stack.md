@@ -1,7 +1,27 @@
 # Simple Web Stack
 
 ## Diagram
-![Simple Web Stack Diagram](https://github.com/ReemaAlshahrani/holbertonschool-system_engineering-devops/blob/e71a4eb118cc9e01694fa0f146aedd418900d683/web_infrastructure_design/0-diagram.md)
+```mermaid
+graph TD
+    User([User / Browser])
+    DNS[DNS Server]
+    
+    subgraph Server["Single Server (IP: 8.8.8.8)"]
+        Nginx[Web Server: Nginx]
+        AppServer[Application Server]
+        Code[Application Files / Codebase]
+        DB[(Database: MySQL)]
+    end
+
+    User -->|1. Request www.foobar.com| DNS
+    DNS -->|2. Resolves IP: 8.8.8.8| User
+    User -->|3. HTTP Request| Nginx
+    Nginx -->|4. Forward Dynamic Requests| AppServer
+    AppServer -->|5. Access Codebase| Code
+    AppServer -->|6. Query Data| DB
+    DB -->|7. Return Data| AppServer
+    AppServer -->|8. Response| Nginx
+    Nginx -->|9. HTTP Response| User
 
 ## Overview
 When a user wants to access `www.foobar.com`, the browser sends a DNS request to resolve the domain name to the server's IP address (`8.8.8.8`). The browser then sends an HTTP request to the server, where Nginx handles the incoming traffic.
