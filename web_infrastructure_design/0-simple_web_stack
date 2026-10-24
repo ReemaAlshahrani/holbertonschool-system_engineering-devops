@@ -1,0 +1,49 @@
+# Simple Web Stack
+
+## Diagram
+```mermaid
+graph TD
+    User([User / Browser])
+    DNS[DNS Server]
+    
+    subgraph Server["Single Server (IP: 8.8.8.8)"]
+        Nginx[Web Server: Nginx]
+        AppServer[Application Server]
+        Code[Application Files / Codebase]
+        DB[(Database: MySQL)]
+    end
+
+    User -->|1. Request [www.foobar.com](https://www.foobar.com)| DNS
+    DNS -->|2. Resolves IP: 8.8.8.8| User
+    User -->|3. HTTP Request| Nginx
+    Nginx -->|4. Forward Dynamic Requests| AppServer
+    AppServer -->|5. Access Codebase| Code
+    AppServer -->|6. Query Data| DB
+    DB -->|7. Return Data| AppServer
+    AppServer -->|8. Response| Nginx
+    Nginx -->|9. HTTP Response| User
+
+Overview
+When a user wants to access www.foobar.com, the browser sends a DNS request to resolve the domain name to the server's IP address (8.8.8.8). The browser then sends an HTTP request to the server, where Nginx handles the incoming traffic.
+
+Components Breakdown
+Server: A physical or virtual machine running 24/7 that hosts all necessary software and resources to serve web requests.
+
+Domain Name: A human-readable address (foobar.com) that translates to a machine-readable IP address (8.8.8.8).
+
+DNS Record Type: An A record is used for www.foobar.com to map the hostname directly to the IPv4 address 8.8.8.8.
+
+Web Server (Nginx): Handles HTTP/HTTPS requests, serves static content (HTML, CSS, images), and proxies dynamic requests to the application server.
+
+Application Server: Executes the application's business logic and processes dynamic requests using the codebase.
+
+Database (MySQL): Stores and manages persistent data securely (e.g., user profiles, credentials, content).
+
+Communication Protocol: The server uses the TCP/IP protocol suite along with HTTP/HTTPS at the application layer to communicate with the user's browser.
+
+Issues with this Infrastructure
+Single Point of Failure (SPOF): Since all components reside on a single server, if the server crashes or hardware fails, the entire application becomes unavailable.
+
+Downtime During Maintenance: Updating code or restarting services (like Nginx or MySQL) requires temporary service interruption, leading to downtime for end users.
+
+Scalability Limitations: A single server has fixed CPU, RAM, and storage. It cannot scale horizontally to handle heavy surges in incoming traffic (high QPS).
